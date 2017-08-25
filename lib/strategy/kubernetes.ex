@@ -175,7 +175,7 @@ defmodule Cluster.Strategy.Kubernetes do
         Enum.reduce(items, [], fn
           %{"subsets" => []}, acc ->
             acc
-          %{"subsets" => subsets}, acc ->
+          %{"subsets" => subsets}, acc when is_list(subsets)  ->
             addrs = Enum.flat_map(subsets, fn
               %{"addresses" => addresses} ->
                 Enum.map(addresses, fn %{"ip" => ip} -> :"#{app_name}@#{ip}" end)
